@@ -11,6 +11,12 @@ let datasourceOptions: TypeOrmModuleOptions = {
   password: process.env.DATABASE_PASSWORD,
   schema: `dbo`,
   entities: [join(__dirname, '..', '..', 'modules', '**', '*.entity{.js,.ts}')],
+  migrations: [
+    join(__dirname, '..', 'database', 'migrations', '*.migration{.js,.ts}'),
+  ],
+  subscribers: [
+    join(__dirname, '..', '..', 'modules', '**', '*.subscriber{.js,.ts}'),
+  ],
   options: {
     encrypt: false,
   },
@@ -53,6 +59,8 @@ switch (process.env.NODE_ENV) {
     };
     break;
 }
+
+export const datasource = datasourceOptions;
 
 export default registerAs(
   'database',
